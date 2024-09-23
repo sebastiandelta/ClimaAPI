@@ -12,29 +12,46 @@ class WeatherController extends Controller
         $city = $request->input('city', 'Bogotá'); // Ciudad por defecto
         $apiKey = env('OPENWEATHER_API_KEY');
 
-        // Cambia a la URL correcta y quita el 'id=524901'
-        $response = Http::get("http://api.openweathermap.org/data/2.5/weather", [
+        // Obtener datos del clima actual
+        $responseCurrent = Http::get("http://api.openweathermap.org/data/2.5/weather", [
             "q" => $city,
-            'appid' => $apiKey,
-            'units' => 'metric'
+            "appid" => $apiKey,
+            "units" => "metric"
         ]);
 
-        $weather = $response->json();
+        $weatherCurrent = $responseCurrent->json();
 
+        // Obtener pronóstico del clima
+        $responseForecast = Http::get("http://api.openweathermap.org/data/2.5/forecast", [
+            "q" => $city,
+            "appid" => $apiKey,
+            "units" => "metric"
+        ]);
+
+        $weatherForecast = $responseForecast->json();
+
+        // Obtener imagen de Unsplash
         $imageResponse = Http::get("https://api.unsplash.com/photos/random", [
             "query" => $city,
             "client_id" => env('UNSPLASH_ACCESS_KEY'),
         ]);
 
         $imageData = $imageResponse->json();
-        
         $imageUrl = $imageData['urls']['small'] ?? null;
 
-        // Verificar si la respuesta contiene datos válidos
-        if (isset($weather['cod']) && $weather['cod'] !== 200) {
-            return view('weather.index')->with('error', 'Ciudad no encontrada');
+        //Preparar datos para graficos
+        $temperatures = [];
+        $humidities = [];
+        $dates = [];
+
+        foreach ($weatherForecast['list'] as $index => $forecast) {
+            if ($index % 8 == 0) { // Solo cada 8 horas
+                $temperatures[] = $forecast['main']['temp'];
+                $humidities[] = $forecast['main']['humidity'];
+                $dates[] = \Carbon\Carbon::createFromTimestamp($forecast['dt'])->format('d M H:i');
+            }
         }
 
-        return view('weather.index', compact('weather', 'imageUrl'));
+        return view('weather.index', compact('weatherCurrent', 'weatherForecast', 'imageUrl', 'temperatures', 'humidities', 'dates'));
     }
 }

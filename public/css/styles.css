@@ -1,0 +1,77 @@
+/* Estilos para el modo claro */
+body {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+/* Estilos para el modo oscuro */
+body.dark-mode {
+    background-color: #121212; /* Fondo oscuro */
+    color: grey; /* Texto claro para contraste */
+}
+
+button {
+    background-color: #007bff; /* Color del botón */
+    color: #ffffff; /* Texto del botón */
+}
+
+/* Estilo del botón en modo oscuro */
+body.dark-mode button {
+    background-color: #1e88e5; /* Color del botón más claro en modo oscuro */
+    color: #ffffff; /* Texto del botón en modo oscuro */
+}
+
+/* Opcional: Cambiar el color de los enlaces */
+a {
+    color: #007bff; /* Color de enlaces en modo claro */
+}
+
+body.dark-mode a {
+    color: #bb86fc; /* Color de enlaces en modo oscuro */
+}
+
+.card {
+    background-color: #ffffff; /* Fondo claro */
+    color: #000000; /* Texto oscuro */
+    border: 1px solid #dddddd; /* Borde claro */
+}
+
+/* Estilos para el modo oscuro */
+body.dark-mode .card {
+    background-color: #1e1e1e; /* Fondo oscuro para la tarjeta */
+    color: #e0e0e0; /* Texto claro para contraste */
+    border: 1px solid #444444; /* Borde más oscuro */
+}
+
+input {
+    background-color: #ffffff; /* Fondo claro */
+    color: #000000; /* Texto oscuro */
+    border: 1px solid #dddddd; /* Borde claro */
+    padding: 10px; /* Espaciado interno */
+    border-radius: 4px; /* Bordes redondeados */
+}
+
+/* Estilos para el input en modo oscuro */
+body.dark-mode input {
+    background-color: #1e1e1e; /* Fondo oscuro */
+    color: #e0e0e0; /* Texto claro */
+    border: 1px solid #444444; /* Borde más oscuro */
+}
+
+.mode-toggle {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #007bff; /* Color de fondo */
+    color: #ffffff; /* Color del texto */
+    border: none;
+    border-radius: 50%;
+    width: 40px; /* Ancho del botón */
+    height: 40px; /* Altura del botón */
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.mode-toggle:hover {
+    background-color: #0056b3; /* Color más oscuro al pasar el mouse */
+}
